@@ -1,10 +1,38 @@
 "use client";
 
 import { Box, CssBaseline, Drawer, List, ListItem, ListItemText, AppBar, Toolbar, Typography, Container, Grid, Card, CardContent } from "@mui/material";
+import { useEffect, useState } from "react";
 
 const drawerWidth = 240;
 
 export default function Dashboard() {
+
+    const [stats, setStats] = useState({
+        topBlog: "",
+        totalUsers: 0,
+        totalBlogs: 0,
+    });
+
+    useEffect(() => {
+        async function fetchStats() {
+            try {
+                const res = await fetch("api/stats");
+                const data = await res.json();
+
+                setStats(data);
+
+            }
+            catch(error) {
+                console.error("Error fetching stats:", error);
+            }
+        }
+
+        fetchStats();
+
+    },[]);
+
+
+
     return (
         <Box sx={{ display: "flex" }}>
             <CssBaseline />
@@ -54,7 +82,7 @@ export default function Dashboard() {
                             <Card>
                                 <CardContent>
                                     <Typography variant="h6">Top Blog</Typography>
-                                    <Typography color="text.secondary">Most read blog</Typography>
+                                    <Typography color="text.secondary">{stats.topBlog}</Typography>
                                 </CardContent>
                             </Card>
                         </Grid>
@@ -63,7 +91,7 @@ export default function Dashboard() {
                             <Card>
                                 <CardContent>
                                     <Typography variant="h6">Total Users</Typography>
-                                    <Typography color="text.secondary">120 Users</Typography>
+                                    <Typography color="text.secondary">{stats.totalUsers} Users</Typography>
                                 </CardContent>
                             </Card>
                         </Grid>
@@ -72,7 +100,7 @@ export default function Dashboard() {
                             <Card>
                                 <CardContent>
                                     <Typography variant="h6">Total Blogs</Typography>
-                                    <Typography color="text.secondary">45 Blogs</Typography>
+                                    <Typography color="text.secondary">{stats.totalBlogs} Blogs</Typography>
                                 </CardContent>
                             </Card>
                         </Grid>
