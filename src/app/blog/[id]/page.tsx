@@ -1,3 +1,4 @@
+import { Box, CircularProgress, Container, Paper, Typography } from "@mui/material";
 import { notFound } from "next/navigation";
 
 export default async function BlogDetailPage({ params }: { params: { id: string } }) {
@@ -14,15 +15,26 @@ export default async function BlogDetailPage({ params }: { params: { id: string 
 
     */
     const res = await fetch(`http://localhost:3000/api/blogs/${params.id}`);
-    if(!res.ok)
-        return notFound();
+    if(!res.ok){
+        //return notFound();
+        return (
+            <Box display="flex" justifyContent="center" alignItems="center" height="100vh" >
+                <CircularProgress/>
+            </Box>
+        )
+    }
+        
 
     const blog = await res.json();
 
     return (
-        <div>
-            <h1>{blog.title}</h1>
-            <p>{blog.content}</p>
-        </div>        
+        <Container maxWidth="md" sx={{mt:4}}>
+            <Paper elevation={3} sx={{p:3, textAlign:"center"}}>
+                <Typography variant="h3" gutterBottom>{blog.title}</Typography>
+                <Box component="img" src={blog.image} alt={blog.title} sx={{ width: "100%", height: 300, objectFit: "cover", borderRadius: 2, mb: 3 }} ></Box>
+                <Typography variant="body1">{blog.content}</Typography>
+
+            </Paper>
+        </Container>      
     );
 }

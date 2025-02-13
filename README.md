@@ -32,4 +32,5 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 - You should know that some libraries do not work in the Server Component in Next.js's App Router system. Material UI throws an error when used directly within a Server Component. That's why we use ThemeProvider in a Client Component with use client.
 - Please **do not rename any folders** in this project. Renaming folders may cause errors due to incorrect import paths or configuration issues. If you need to make structural changes, ensure all references are updated accordingly.
 - Created a Dummy API (app/api)
-- 
+- images are in the public/images folder
+
