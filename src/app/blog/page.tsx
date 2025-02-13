@@ -2,6 +2,7 @@
 
 import { useState,useEffect } from "react";
 import { Container, Typography, Grid, Card, CardContent, CircularProgress } from "@mui/material";
+import Link from "next/link";
 
 
 type Blog = {
@@ -48,15 +49,17 @@ export default function BlogPage() {
                     !error &&
                     blogs.map((blog) => (
                         <Grid item xs={12} md={6} lg={4} key={blog.id}>
-                            <Card>
-                                <CardContent>
-                                    <Typography variant="h6">{blog.title}</Typography>
-                                    <Typography variant="subtitle2" color="text.secondary">
-                                        by {blog.author}
-                                    </Typography>
-                                    <Typography variant="body2">{blog.description}</Typography>
-                                </CardContent>
-                            </Card>
+                            <Link key={blog.id} href={`/blog/${blog.id}`} style={{ textDecoration: "none" }} >
+                                <Card sx={{ mb: 2, p: 2, cursor: "pointer", "&:hover": { backgroundColor: "#f5f5f5" } }}>
+                                    <CardContent>
+                                        <Typography variant="h6">{blog.title}</Typography>
+                                        <Typography variant="subtitle2" color="text.secondary">
+                                            by {blog.author}
+                                        </Typography>
+                                        <Typography variant="body2">{blog.description}</Typography>
+                                    </CardContent>
+                                </Card>
+                            </Link>
                         </Grid>
                     ))}
             </Grid>
