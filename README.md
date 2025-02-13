@@ -9,7 +9,6 @@ npm install
 pnpm install
 ```
 After,run the development server:
->>>>>>> 36a49bd (created blog api and fetch method, changed blog page)
 
 ```bash
 npm run dev
