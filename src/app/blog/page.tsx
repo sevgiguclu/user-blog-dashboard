@@ -61,6 +61,5 @@ export default function BlogPage() {
                     ))}
             </Grid>
         </Container>
->>>>>>> 36a49bd (created blog api and fetch method, changed blog page)
     );
 }
