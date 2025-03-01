@@ -1,5 +1,6 @@
 "use client";
 
+import UserManagement from "@/components/UserManagement";
 import { Box, CssBaseline, Drawer, List, ListItem, ListItemText, AppBar, Toolbar, Typography, Container, Grid, Card, CardContent } from "@mui/material";
 import { useEffect, useState } from "react";
 
@@ -105,6 +106,9 @@ export default function Dashboard() {
                             </Card>
                         </Grid>
                     </Grid>
+                    
+                    <UserManagement/>
+
                 </Container>
             </Box>
         </Box>
