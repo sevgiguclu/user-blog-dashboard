@@ -1,8 +1,10 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { Box, Button, TextField, Typography, List, ListItem, ListItemText, MenuItem, Select } from "@mui/material";
-
+import { Box, Button, TextField, Typography, List, ListItem, ListItemText, MenuItem, Select, IconButton } from "@mui/material";
+import EditIcon from "@mui/icons-material/Edit";
+import SaveIcon from "@mui/icons-material/Save";
+import CancelIcon from "@mui/icons-material/Cancel";
 
 interface User {
     id: number;
@@ -17,6 +19,7 @@ export default function UserManagement(){
     const [email, setEmail] = useState("");
     const [role, setRole] = useState("user"); // default role
     const [search, setSearch] = useState("");
+    const [editUser,setEditUser] = useState<User|null>(null);
 
     useEffect(()=>{
         fetch("/api/users")
@@ -25,6 +28,7 @@ export default function UserManagement(){
         .catch((err)=>console.error("Error fetching users",err));
     },[]);
 
+    
     const AddUser = async() => {
         if (!name || !email || !role) return alert("Lütfen tüm bilgileri girin!");
 
@@ -54,6 +58,21 @@ export default function UserManagement(){
             setUsers(users.filter((user)=> user.id !== id));
     };
 
+    const UpdateUser = async() => {
+        if(!editUser) return;
+
+        const res = await fetch("/api/users", {
+            method: "PUT",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(editUser),
+        });
+
+        if(res.ok){
+            setUsers(users.map((user) => (user.id !== editUser.id ? user : editUser)));
+            setEditUser(null);
+        }
+    };
+
     //filtered users
     const filteredUsers = users.filter((user) => user.name.toLowerCase().includes(search.toLowerCase()));
 
@@ -81,8 +100,25 @@ export default function UserManagement(){
             <List>
                 {filteredUsers.map((user) => (
                 <ListItem key={user.id} sx={{ display: "flex", justifyContent: "space-between" }}>
-                    <ListItemText primary={`${user.name} (${user.role})`} secondary={user.email} />
-                    <Button variant="outlined" color="error" onClick={() => DeleteUser(user.id)}>Delete</Button>
+                    {editUser?.id === user.id ? (
+                        <>
+                        <TextField size="small" value={editUser.name} onChange={(e) => setEditUser({ ...editUser, name: e.target.value })} sx={{ mr: 1 }} />
+                        <TextField size="small" value={editUser.email} onChange={(e) => setEditUser({ ...editUser, email: e.target.value })} sx={{ mr: 1 }} />
+                        <Select size="small" value={editUser.role} onChange={(e) => setEditUser({ ...editUser, role: e.target.value })} sx={{ mr: 1 }}>
+                          <MenuItem value="user">User</MenuItem>
+                          <MenuItem value="admin">Admin</MenuItem>
+                          <MenuItem value="editor">Editor</MenuItem>
+                        </Select>
+                        <IconButton onClick={UpdateUser}><SaveIcon color="primary" /></IconButton>
+                        <IconButton onClick={() => setEditUser(null)}><CancelIcon color="error" /></IconButton>
+                      </>
+                    ) : (
+                        <>
+                            <ListItemText primary={`${user.name} (${user.role})`} secondary={user.email} />
+                            <IconButton onClick={() => setEditUser(user)}><EditIcon color="primary" /></IconButton>
+                            <Button variant="outlined" color="error" onClick={() => DeleteUser(user.id)}>Delete</Button>
+                        </>
+                    )}
                 </ListItem>
                 ))}
             </List>

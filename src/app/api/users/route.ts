@@ -28,3 +28,14 @@ export async function DELETE(req: Request) {
     users = users.filter((user) => user.id !== id);
     return NextResponse.json({ message: "User deleted", users });
 }
+
+//update user
+export async function PUT(req:Request) {
+    const updatedUser = await req.json();
+
+    users = users.map((user) =>
+        user.id === updatedUser.id ? { ...user, ...updatedUser } : user
+    );
+
+    return NextResponse.json({ message: "User updated successfully!" });
+}
