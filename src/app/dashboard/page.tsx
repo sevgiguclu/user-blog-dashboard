@@ -1,10 +1,6 @@
 "use client";
-
-import UserManagement from "@/components/UserManagement";
-import { Box, CssBaseline, Drawer, List, ListItem, ListItemText, AppBar, Toolbar, Typography, Container, Grid, Card, CardContent } from "@mui/material";
+import { Typography, Container, Grid, Card, CardContent } from "@mui/material";
 import { useEffect, useState } from "react";
-
-const drawerWidth = 240;
 
 export default function Dashboard() {
 
@@ -32,85 +28,42 @@ export default function Dashboard() {
 
     },[]);
 
-
-
     return (
-        <Box sx={{ display: "flex" }}>
-            <CssBaseline />
+        <Container>
+            <Typography variant="h4" gutterBottom>
+                Dashboard
+            </Typography>
 
-            {/* Top Navigation Bar */}
-            <AppBar position="fixed" sx={{ zIndex: (theme) => theme.zIndex.drawer + 1 }}>
-                <Toolbar>
-                    <Typography variant="h6" noWrap component="div">
-                        User Blog Dashboard
-                    </Typography>
-                </Toolbar>
-            </AppBar>
+            {/* Dashboard Stats */}
+            <Grid container spacing={3}>
+                <Grid item xs={12} md={6} lg={4}>
+                    <Card>
+                        <CardContent>
+                            <Typography variant="h6">Top Blog</Typography>
+                            <Typography color="text.secondary">{stats.topBlog}</Typography>
+                        </CardContent>
+                    </Card>
+                </Grid>
 
-            {/* Sidebar Navigation */}
-            <Drawer
-                variant="permanent"
-                sx={{
-                    width: drawerWidth,
-                    flexShrink: 0,
-                    [`& .MuiDrawer-paper`]: { width: drawerWidth, boxSizing: "border-box" },
-                }}
-            >
-                <Toolbar />
-                <Box sx={{ overflow: "auto" }}>
-                    <List>
-                        {["Home", "Blogs", "Users", "Statistics"].map((text) => (
-                            <ListItem button key={text}>
-                                <ListItemText primary={text} />
-                            </ListItem>
-                        ))}
-                    </List>
-                </Box>
-            </Drawer>
+                <Grid item xs={12} md={6} lg={4}>
+                    <Card>
+                        <CardContent>
+                            <Typography variant="h6">Total Users</Typography>
+                            <Typography color="text.secondary">{stats.totalUsers} Users</Typography>
+                        </CardContent>
+                    </Card>
+                </Grid>
 
-            {/* Main Content */}
-            <Box component="main" sx={{ flexGrow: 1, p: 3, ml: `${drawerWidth}px` }}>
-                <Toolbar />
+                <Grid item xs={12} md={6} lg={4}>
+                    <Card>
+                        <CardContent>
+                            <Typography variant="h6">Total Blogs</Typography>
+                            <Typography color="text.secondary">{stats.totalBlogs} Blogs</Typography>
+                        </CardContent>
+                    </Card>
+                </Grid>
+            </Grid>
 
-                <Container>
-                    <Typography variant="h4" gutterBottom>
-                        Dashboard
-                    </Typography>
-
-                    {/* Dashboard Stats */}
-                    <Grid container spacing={3}>
-                        <Grid item xs={12} md={6} lg={4}>
-                            <Card>
-                                <CardContent>
-                                    <Typography variant="h6">Top Blog</Typography>
-                                    <Typography color="text.secondary">{stats.topBlog}</Typography>
-                                </CardContent>
-                            </Card>
-                        </Grid>
-
-                        <Grid item xs={12} md={6} lg={4}>
-                            <Card>
-                                <CardContent>
-                                    <Typography variant="h6">Total Users</Typography>
-                                    <Typography color="text.secondary">{stats.totalUsers} Users</Typography>
-                                </CardContent>
-                            </Card>
-                        </Grid>
-
-                        <Grid item xs={12} md={6} lg={4}>
-                            <Card>
-                                <CardContent>
-                                    <Typography variant="h6">Total Blogs</Typography>
-                                    <Typography color="text.secondary">{stats.totalBlogs} Blogs</Typography>
-                                </CardContent>
-                            </Card>
-                        </Grid>
-                    </Grid>
-                    
-                    <UserManagement/>
-
-                </Container>
-            </Box>
-        </Box>
+        </Container>  
     );
 }

@@ -1,5 +1,10 @@
 import type { Metadata } from "next";
 import ThemeRegistry from "../shared/ThemeRegistry";
+import Header from "@/components/Header";
+import Sidebar from "@/components/Sidebar";
+import {Box, CssBaseline, Toolbar} from "@mui/material";
+
+const drawerWidth = 240;
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -15,7 +20,17 @@ export default function RootLayout({
     <html lang="en">
           <body>
               <ThemeRegistry>
-                  {children }
+              <Box sx={{ display: "flex" }}>
+                <CssBaseline />
+
+                {/* Main Content */}
+                <Box component="main" sx={{ flexGrow: 1, p: 3, ml: `${drawerWidth}px` }}>
+                    <Toolbar />
+                    <Header/>
+                    <Sidebar/>
+                    {children }
+                </Box>
+              </Box>
               </ThemeRegistry>
         </body>
     </html>
