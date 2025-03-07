@@ -27,6 +27,7 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 - Next.js - App Router
 - React.js
 - Material UI
+- Recharts
 
 ## Learn More
 - You should know that some libraries do not work in the Server Component in Next.js's App Router system. Material UI throws an error when used directly within a Server Component. That's why we use ThemeProvider in a Client Component with use client.

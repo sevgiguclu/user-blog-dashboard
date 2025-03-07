@@ -7,7 +7,8 @@ const drawerWidth = 240;
 
 const pages = [
   { name: "Home", path: "/" },
-  { name: "Admin Dashboard", path: "/dashboard" },
+  { name: "Admin Dashboard", path: "/dashboard/admin" },
+  { name: "Editor Dashboard", path: "/dashboard/editor" },
   { name: "Blogs", path: "/blog" },
   { name: "Users", path: "/users" },
   { name: "Profile", path: "/profile" },
